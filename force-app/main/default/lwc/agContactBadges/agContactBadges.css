@@ -1,0 +1,12 @@
+.registration-badge {
+    --sds-c-badge-color-background: #baf6f7;
+}
+.membership-badge {
+    --sds-c-badge-color-background: #d4dbff;
+}
+.affiliation-badge {
+    --sds-c-badge-color-background: #e9c7ff;
+}
+.donor-badge {
+    --sds-c-badge-color-background: #f7e999;
+}

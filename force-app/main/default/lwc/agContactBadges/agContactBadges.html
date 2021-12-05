@@ -1,0 +1,20 @@
+<template>
+    <lightning-card title={cardTitle}>
+        <!-- Registrations -->
+        <template for:each={registrationNames} for:item="registrationName">
+            <lightning-badge key={registrationName} icon-name="standard:goals" label={registrationName} class="slds-m-around_x-small registration-badge"></lightning-badge>
+        </template>
+        <!-- Memberships -->
+        <template for:each={membershipNames} for:item="membershipName">
+            <lightning-badge key={membershipName} icon-name="standard:scan_card" label={membershipName} class="slds-m-around_x-small membership-badge"></lightning-badge>
+        </template>
+        <!-- Affiliations -->
+        <template for:each={affiliationNames} for:item="affiliationName">
+            <lightning-badge key={affiliationName} icon-name="standard:customers" label={affiliationName} class="slds-m-around_x-small affiliation-badge"></lightning-badge>
+        </template>
+        <!-- Donor Levels -->
+        <template for:each={donorLevelNames} for:item="donorLevelName">
+            <lightning-badge key={donorLevelName} icon-name="standard:thanks" label={donorLevelName} class="slds-m-around_x-small donor-badge"></lightning-badge>
+        </template>
+    </lightning-card>
+</template>
