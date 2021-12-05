@@ -1,24 +1,29 @@
 <template>
-    <lightning-card title={cardTitle}>
+    <lightning-card>
+        <!-- <h1 slot="title">{firstName}'s {cardTitle}</h1> -->
         <!-- Outstanding Balance -->
         <template if:true={hasOutstandingBalance}>
-            <lightning-badge icon-name="custom:custom82" label="Has Outstanding Balance" class="slds-m-around_x-small slds-theme_warning"></lightning-badge>
-        </template>
-        <!-- Registrations -->
-        <template for:each={registrationNames} for:item="registrationName">
-            <lightning-badge key={registrationName} icon-name="standard:goals" label={registrationName} class="slds-m-around_x-small registration-badge"></lightning-badge>
+            <lightning-badge icon-name="custom:custom82" label="Has Outstanding Balance" class="slds-m-top_xxx-small slds-theme_warning"></lightning-badge>
         </template>
         <!-- Memberships -->
         <template for:each={membershipNames} for:item="membershipName">
-            <lightning-badge key={membershipName} icon-name="standard:scan_card" label={membershipName} class="slds-m-around_x-small membership-badge"></lightning-badge>
+            <lightning-badge key={membershipName} icon-name="standard:scan_card" label={membershipName} class="slds-m-top_xxx-small membership-badge"></lightning-badge>
+        </template>
+        <!-- Registrations -->
+        <template for:each={registrationNames} for:item="registrationName">
+            <lightning-badge key={registrationName} icon-name="standard:goals" label={registrationName} class="slds-m-top_xxx-small registration-badge"></lightning-badge>
         </template>
         <!-- Affiliations -->
         <template for:each={affiliationNames} for:item="affiliationName">
-            <lightning-badge key={affiliationName} icon-name="standard:customers" label={affiliationName} class="slds-m-around_x-small affiliation-badge"></lightning-badge>
+            <lightning-badge key={affiliationName} icon-name="standard:customers" label={affiliationName} class="slds-m-top_xxx-small affiliation-badge"></lightning-badge>
         </template>
         <!-- Donor Levels -->
         <template for:each={donorLevelNames} for:item="donorLevelName">
-            <lightning-badge key={donorLevelName} icon-name="standard:thanks" label={donorLevelName} class="slds-m-around_x-small donor-badge"></lightning-badge>
+            <lightning-badge key={donorLevelName} icon-name="standard:thanks" label={donorLevelName} class="slds-m-top_xxx-small donor-badge"></lightning-badge>
+        </template>
+        <!-- Staff -->
+        <template if:true={isStaffMember}>
+            <lightning-badge icon-name="standard:service_crew_member" label="AG Staff" class="slds-m-top_xxx-small"></lightning-badge>
         </template>
     </lightning-card>
 </template>
