@@ -1,5 +1,9 @@
 <template>
     <lightning-card title={cardTitle}>
+        <!-- Outstanding Balance -->
+        <template if:true={hasOutstandingBalance}>
+            <lightning-badge icon-name="custom:custom82" label="Has Outstanding Balance" class="slds-m-around_x-small slds-theme_warning"></lightning-badge>
+        </template>
         <!-- Registrations -->
         <template for:each={registrationNames} for:item="registrationName">
             <lightning-badge key={registrationName} icon-name="standard:goals" label={registrationName} class="slds-m-around_x-small registration-badge"></lightning-badge>

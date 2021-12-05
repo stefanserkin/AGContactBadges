@@ -5,7 +5,9 @@ export default class AgContactBadges extends LightningElement {
 
     registrationNames = ['AGUA Team Member', 'AGSC Former Player'];
     membershipNames = ['Gold Membership: Upper East Side'];
-    affiliationNames = ['AG Board Member', 'Wells Fargo CEO'];
+    affiliationNames = ['AG Board Member'];
     donorLevelNames = ['Major Donor'];
+
+    hasOutstandingBalance = true;
 
 }
