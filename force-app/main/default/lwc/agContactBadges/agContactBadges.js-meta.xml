@@ -9,9 +9,7 @@
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
             <objects>
-                <object>
-                    Contact
-                </object>
+                <object>Contact</object>
             </objects>
         </targetConfig>
     </targetConfigs>
