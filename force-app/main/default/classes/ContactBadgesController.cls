@@ -1,43 +1,53 @@
 public with sharing class ContactBadgesController {
-    
+
     @AuraEnabled(cacheable=true)
-    public static List<String> getActiveMembershipNames(String recordId) {
-        List<String> lstMembershipNames = new List<String>();
-        List<TREX1__Membership__c> lstMemberships = [
-            SELECT Id, Name, TREX1__memb_Type__r.Name
-              FROM TREX1__Membership__c 
-             WHERE TREX1__Contact__c = :recordId 
-               AND TREX1__Status__c IN ('Active', 'Pending Withdrawal', 'Pending Transfer')
-              WITH SECURITY_ENFORCED
-             LIMIT 150
-        ];
-        for (TREX1__Membership__c mem : lstMemberships) {
-            if (mem.TREX1__memb_Type__r.Name != null) {
-                lstMembershipNames.add(mem.TREX1__memb_Type__r.Name);
+    public static List<BadgeDataWrapper> getBadgeData(String recordId) {
+
+        List<Contact_Badge_Definition__mdt> cbdList = Contact_Badge_Definition__mdt.getAll().values();
+        List<BadgeDataWrapper> lstBadgeData = new List<BadgeDataWrapper>();
+
+        for (Contact_Badge_Definition__mdt cbd : cbdList) {
+            if (!cbd.Active__c) {
+                continue;
+            }
+
+            // Get results of query in Contact Badge Definition
+            String query = cbd.Query__c;
+            List<SObject> queryResults = Database.query(query);
+
+            // Load results into 
+            for (SObject obj : queryResults) {
+                BadgeDataWrapper bdw = new BadgeDataWrapper();
+                bdw.id = obj.Id;
+                // Set label based on label type
+                if (cbd.Badge_Label_Type__c == 'Value') {
+                    bdw.label = cbd.Label_Value__c;
+                } else if (cbd.Badge_Label_Type__c == 'Field Reference') {
+                    Map<String,Object> mapObjFields = obj.getPopulatedFieldsAsMap();
+                    bdw.label = String.valueOf(mapObjFields.get(cbd.Label_Field_Reference__c));
+                }
+                // Set hex color
+                bdw.hexColor = cbd.Background_Color__c != null ? '#' + cbd.Background_Color__c : '#D3D3D3';
+                lstBadgeData.add(bdw);
             }
         }
-        return lstMembershipNames;
+
+        return lstBadgeData;
+        
     }
 
+    private class BadgeDataWrapper {
+        @AuraEnabled
+        public Id id {get;set;}
 
-    @AuraEnabled(cacheable=true)
-    public static List<SObject> getBadgeData(String recordId) {
-        String objName = 'TREX1__Registration__c';
-        List<String> objFields = new List<String>();
-        objFields.add('TREX1__Course_Session_Name__c');
-        objFields.add('TREX1__Registration_Status__c');
-        String filterCriteria = 'TREX1__Registration_Status__c LIKE \'Active\'';
+        @AuraEnabled
+        public String label {get;set;}
 
-        String query = 'SELECT Id';
-        for (String objField : objFields) {
-            query += ', ' + objField;
-        }
-        query += ' FROM ' + objName;
-        query += ' WHERE ' + filterCriteria;
+        @AuraEnabled
+        public String hexColor {get;set;}
 
-        List<SObject> lstSObjects = Database.query(query);
-        return lstSObjects;
-        
+        @AuraEnabled
+        public List<String> fieldSet {get;set;}
     }
 
 }
