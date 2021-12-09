@@ -2,20 +2,22 @@ public with sharing class ContactBadgesController {
 
     @AuraEnabled(cacheable=true)
     public static List<BadgeDataWrapper> getBadgeData(String recordId) {
-
+        // Get all Contact Badge Definitions
         List<Contact_Badge_Definition__mdt> cbdList = Contact_Badge_Definition__mdt.getAll().values();
+        // Create empty list of wrappers to return
         List<BadgeDataWrapper> lstBadgeData = new List<BadgeDataWrapper>();
 
         for (Contact_Badge_Definition__mdt cbd : cbdList) {
+            // Ignore if inactive
             if (!cbd.Active__c) {
                 continue;
             }
 
             // Get results of query in Contact Badge Definition
-            String query = cbd.Query__c;
+            String query = ContactBadgesHelper.getQueryFromDefinition(cbd);
             List<SObject> queryResults = Database.query(query);
 
-            // Load results into 
+            // Create wrapper from mdt details and add to list
             for (SObject obj : queryResults) {
                 BadgeDataWrapper bdw = new BadgeDataWrapper();
                 bdw.id = obj.Id;
@@ -39,13 +41,10 @@ public with sharing class ContactBadgesController {
     private class BadgeDataWrapper {
         @AuraEnabled
         public Id id {get;set;}
-
         @AuraEnabled
         public String label {get;set;}
-
         @AuraEnabled
         public String hexColor {get;set;}
-
         @AuraEnabled
         public List<String> fieldSet {get;set;}
     }
