@@ -3,39 +3,31 @@ public with sharing class ContactBadgesController {
     @AuraEnabled(cacheable=true)
     public static List<BadgeDataWrapper> getBadgeData(String recordId) {
         // Get all Contact Badge Definitions
-        List<Contact_Badge_Definition__mdt> cbdList = Contact_Badge_Definition__mdt.getAll().values();
+        List<Contact_Badge_Definition__mdt> lstDefinitions = Contact_Badge_Definition__mdt.getAll().values();
         // Create empty list of wrappers to return
         List<BadgeDataWrapper> lstBadgeData = new List<BadgeDataWrapper>();
 
-        for (Contact_Badge_Definition__mdt cbd : cbdList) {
-            // Ignore if inactive
-            if (!cbd.Active__c) {
+        for (Contact_Badge_Definition__mdt definition : lstDefinitions) {
+            if (!definition.Active__c) {
                 continue;
             }
-
-            // Get results of query in Contact Badge Definition
-            String query = ContactBadgesHelper.getQueryFromDefinition(cbd);
+            // Query for related records
+            String query = ContactBadgesHelper.getQueryFromDefinition(definition);
             List<SObject> queryResults = Database.query(query);
-
             // Create wrapper from mdt details and add to list
             for (SObject obj : queryResults) {
-                BadgeDataWrapper bdw = new BadgeDataWrapper();
-                bdw.id = obj.Id;
-                // Set label based on label type
-                if (cbd.Badge_Label_Type__c == 'Value') {
-                    bdw.label = cbd.Label_Value__c;
-                } else if (cbd.Badge_Label_Type__c == 'Field Reference') {
-                    Map<String,Object> mapObjFields = obj.getPopulatedFieldsAsMap();
-                    bdw.label = String.valueOf(mapObjFields.get(cbd.Label_Field_Reference__c));
-                }
-                // Set hex color
-                bdw.hexColor = cbd.Background_Color__c != null ? '#' + cbd.Background_Color__c : '#D3D3D3';
-                lstBadgeData.add(bdw);
+                BadgeDataWrapper badge = new BadgeDataWrapper();
+                badge.id              = obj.Id;
+                badge.label           = ContactBadgesHelper.getBadgeLabel(definition, obj);
+                badge.hexColor        = ContactBadgesHelper.getBadgeColor(definition);
+                badge.colorStyle      = ContactBadgesHelper.getBadgeColorStyle(definition);
+                badge.labelStyle      = ContactBadgesHelper.getBadgeLabelStyle(definition);
+                badge.iconName        = ContactBadgesHelper.getBadgeIconName(definition);
+                List<String> fieldSet = ContactBadgesHelper.constructFieldSet(definition);
+                lstBadgeData.add(badge);
             }
         }
-
         return lstBadgeData;
-        
     }
 
     private class BadgeDataWrapper {
@@ -45,6 +37,12 @@ public with sharing class ContactBadgesController {
         public String label {get;set;}
         @AuraEnabled
         public String hexColor {get;set;}
+        @AuraEnabled
+        public String colorStyle {get;set;}
+        @AuraEnabled
+        public String labelStyle {get;set;}
+        @AuraEnabled
+        public String iconName {get;set;}
         @AuraEnabled
         public List<String> fieldSet {get;set;}
     }

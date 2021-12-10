@@ -1,0 +1,17 @@
+<template>
+    <lightning-card if:true={badgeData}>
+        <template for:each={badgeData} for:item="badge">
+            <div key={badge.id} style="display:inline-block;">
+                <div style={badge.colorStyle}>
+                    <div style={badge.labelStyle}>
+                        <lightning-badge 
+                            icon-name={badge.iconName}
+                            label={badge.label} 
+                            class="slds-m-top_xxx-small" 
+                        ></lightning-badge>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </lightning-card>
+</template>
