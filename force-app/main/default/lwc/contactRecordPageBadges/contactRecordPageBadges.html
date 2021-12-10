@@ -6,10 +6,11 @@
                 style="display:inline-block;" 
                 data-badgeid={badge.id} 
                 data-objtype={badge.objType} 
-                data-addfield1={badge.addField1} 
-                data-addfield2={badge.addField2} 
+                data-fieldset={badge.fieldSet} 
                 onmouseout={hideData} 
-                onmouseover={showData}
+                onmouseover={showData} 
+                onclick={handleBadgeClick} 
+                class="contact-badge"
             >
                 <div style={badge.colorStyle}><div style={badge.labelStyle}>
                     <lightning-badge 
@@ -27,8 +28,7 @@
         leftmargin={left} 
         mybadge={badge} 
         myobj={objType} 
-        addfield1={addField1} 
-        addfield2={addField2}
+        fieldset={fieldSetArray}
     ></c-contact-badge-popover>
 
 </template>

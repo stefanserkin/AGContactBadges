@@ -26,14 +26,8 @@ public with sharing class ContactBadgesController {
                 badge.colorStyle      = ContactBadgesHelper.getBadgeColorStyle(definition);
                 badge.labelStyle      = ContactBadgesHelper.getBadgeLabelStyle(definition);
                 badge.iconName        = ContactBadgesHelper.getBadgeIconName(definition);
-                List<String> fieldSet = ContactBadgesHelper.constructFieldSet(definition);
-                badge.fieldSet        = fieldSet;
-                if (fieldSet.size() > 0) {
-                    badge.addField1 = fieldSet[0];
-                }
-                if (fieldSet.size() > 1) {
-                    badge.addField2 = fieldSet[1];
-                }
+                // List<String> fieldSet = ContactBadgesHelper.constructFieldSet(definition);
+                badge.fieldSet        = definition.Additional_Detail_Fields__c;
                 lstBadgeData.add(badge);
             }
         }
@@ -60,7 +54,7 @@ public with sharing class ContactBadgesController {
         @AuraEnabled
         public String addField2 {get;set;}
         @AuraEnabled
-        public List<String> fieldSet {get;set;}
+        public String fieldSet {get;set;}
     }
 
 }
