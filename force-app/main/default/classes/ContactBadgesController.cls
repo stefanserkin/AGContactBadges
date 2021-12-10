@@ -20,6 +20,7 @@ public with sharing class ContactBadgesController {
             for (SObject obj : queryResults) {
                 BadgeDataWrapper badge = new BadgeDataWrapper();
                 badge.id              = obj.Id;
+                badge.objType         = definition.Object_Type__c;
                 badge.label           = ContactBadgesHelper.getBadgeLabel(definition, obj);
                 badge.hexColor        = ContactBadgesHelper.getBadgeColor(definition);
                 badge.colorStyle      = ContactBadgesHelper.getBadgeColorStyle(definition);
@@ -35,6 +36,8 @@ public with sharing class ContactBadgesController {
     private class BadgeDataWrapper {
         @AuraEnabled
         public Id id {get;set;}
+        @AuraEnabled
+        public String objType {get;set;}
         @AuraEnabled
         public String label {get;set;}
         @AuraEnabled

@@ -1,17 +1,19 @@
 <template>
+
     <lightning-card if:true={displayBadges}>
         <template for:each={badgeData} for:item="badge">
-            <div key={badge.id} style="display:inline-block;">
-                <div style={badge.colorStyle}>
-                    <div style={badge.labelStyle}>
-                        <lightning-badge 
-                            icon-name={badge.iconName}
-                            label={badge.label} 
-                            class="slds-m-horizontal_small" 
-                        ></lightning-badge>
-                    </div>
-                </div>
+            <div key={badge.id} style="display:inline-block;" data-badgeid={badge.id} data-objtype={badge.objType} onmouseout={hideData} onmouseover={showData}>
+                <div style={badge.colorStyle}><div style={badge.labelStyle}>
+                    <lightning-badge 
+                        icon-name={badge.iconName}
+                        label={badge.label} 
+                        class="slds-m-horizontal_small" 
+                    ></lightning-badge>
+                </div></div>
             </div>
         </template>
     </lightning-card>
+
+    <c-contact-badge-popover topmargin={top} leftmargin={left} mybadge={badge} myobj={objType}></c-contact-badge-popover>
+
 </template>

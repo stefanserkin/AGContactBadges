@@ -1,0 +1,25 @@
+<template>
+    <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+        <div class={modalClasses}>
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                onclick={handleCloseEvent}>
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Close</span>
+                    </button>
+                <slot name="header">
+                </slot>
+            </header>
+            <div>
+                <slot name="content">
+                </slot>
+            </div>
+            <footer class="slds-modal__footer">
+                <slot name="footer"></slot>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>
