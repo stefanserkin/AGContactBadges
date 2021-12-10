@@ -9,6 +9,8 @@ export default class ContactRecordPageBadges extends LightningElement {
     @track wiredBadgeDataResult;
     @track badge;
     @track objType;
+    @track addField1;
+    @track addField2;
 
     @wire(getBadgeData, { recordId : '$recordId' })
     wiredBadgeData(result) {
@@ -17,6 +19,7 @@ export default class ContactRecordPageBadges extends LightningElement {
             this.badgeData = result.data;
             this.error = undefined;
             console.table(this.badgeData);
+            console.log(this.badgeData);
         } else if (result.error) {
             this.badgeData = undefined;
             this.error = result.error;
@@ -30,14 +33,15 @@ export default class ContactRecordPageBadges extends LightningElement {
     showData(event) {
 		this.badge = event.currentTarget.dataset.badgeid;
         this.objType = event.currentTarget.dataset.objtype;
+        this.addField1 = event.currentTarget.dataset.addfield1;
+        this.addField2 = event.currentTarget.dataset.addfield2;
 		this.left = event.clientX;
 		this.top = event.clientY;
-        console.log(this.badge);
-        console.log(this.objType);
+        console.log(this.addField1);
+        console.log(this.addField2);
 	}
 	hideData() {
 		this.badge = "";
-        console.log('Oh! No more badge');
 	}
 
 }

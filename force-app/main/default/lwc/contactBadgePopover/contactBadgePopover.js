@@ -3,6 +3,8 @@ import { LightningElement, api, track } from 'lwc';
 export default class ContactBadgePopover extends LightningElement {
     @track badge;
     @track obj;
+    @track addField1;
+    @track addField2;
     @track top = 50;
     @track left = 50;
 
@@ -20,6 +22,22 @@ export default class ContactBadgePopover extends LightningElement {
     }
     set myobj(value) {
         this.obj = value;
+    }
+
+    @api
+    get addfield1() {
+        return this.addField1;
+    }
+    set addfield1(value) {
+        this.addField1 = value;
+    }
+
+    @api
+    get addfield2() {
+        return this.addField2;
+    }
+    set addfield2(value) {
+        this.addField2 = value;
     }
 
     @api

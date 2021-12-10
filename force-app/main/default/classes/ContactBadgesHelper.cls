@@ -30,7 +30,7 @@ public without sharing class ContactBadgesHelper {
     public static List<String> constructFieldSet(Contact_Badge_Definition__mdt definition) {
         List<String> fieldSet = new List<String>();
         if (!String.isBlank(definition.Additional_Detail_Fields__c)) {
-            fieldSet = definition.Additional_Detail_Fields__c.split(',');
+            fieldSet = definition.Additional_Detail_Fields__c.replaceAll('\\s+','').split(',');
         }
         return fieldSet;
     }

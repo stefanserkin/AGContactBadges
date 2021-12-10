@@ -1,8 +1,16 @@
 <template>
 
     <lightning-card if:true={displayBadges}>
-        <template for:each={badgeData} for:item="badge">
-            <div key={badge.id} style="display:inline-block;" data-badgeid={badge.id} data-objtype={badge.objType} onmouseout={hideData} onmouseover={showData}>
+        <template for:each={badgeData} for:item="badge" for:index="index">
+            <div key={badge.id} 
+                style="display:inline-block;" 
+                data-badgeid={badge.id} 
+                data-objtype={badge.objType} 
+                data-addfield1={badge.addField1} 
+                data-addfield2={badge.addField2} 
+                onmouseout={hideData} 
+                onmouseover={showData}
+            >
                 <div style={badge.colorStyle}><div style={badge.labelStyle}>
                     <lightning-badge 
                         icon-name={badge.iconName}
@@ -14,6 +22,13 @@
         </template>
     </lightning-card>
 
-    <c-contact-badge-popover topmargin={top} leftmargin={left} mybadge={badge} myobj={objType}></c-contact-badge-popover>
+    <c-contact-badge-popover 
+        topmargin={top} 
+        leftmargin={left} 
+        mybadge={badge} 
+        myobj={objType} 
+        addfield1={addField1} 
+        addfield2={addField2}
+    ></c-contact-badge-popover>
 
 </template>
