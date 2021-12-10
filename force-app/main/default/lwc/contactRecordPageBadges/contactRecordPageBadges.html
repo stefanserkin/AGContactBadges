@@ -1,5 +1,5 @@
 <template>
-    <lightning-card if:true={badgeData}>
+    <lightning-card if:true={displayBadges}>
         <template for:each={badgeData} for:item="badge">
             <div key={badge.id} style="display:inline-block;">
                 <div style={badge.colorStyle}>
@@ -7,7 +7,7 @@
                         <lightning-badge 
                             icon-name={badge.iconName}
                             label={badge.label} 
-                            class="slds-m-top_xxx-small" 
+                            class="slds-m-horizontal_small" 
                         ></lightning-badge>
                     </div>
                 </div>

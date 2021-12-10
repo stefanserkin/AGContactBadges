@@ -3,7 +3,9 @@ public with sharing class ContactBadgesController {
     @AuraEnabled(cacheable=true)
     public static List<BadgeDataWrapper> getBadgeData(String recordId) {
         // Get all Contact Badge Definitions
-        List<Contact_Badge_Definition__mdt> lstDefinitions = Contact_Badge_Definition__mdt.getAll().values();
+        List<Contact_Badge_Definition__mdt> lstUnsortedDefinitions = Contact_Badge_Definition__mdt.getAll().values();
+        // Sort list by sort order
+        List<Contact_Badge_Definition__mdt> lstDefinitions = ContactBadgesHelper.sortContactBadgeDefinitions(lstUnsortedDefinitions);
         // Create empty list of wrappers to return
         List<BadgeDataWrapper> lstBadgeData = new List<BadgeDataWrapper>();
 

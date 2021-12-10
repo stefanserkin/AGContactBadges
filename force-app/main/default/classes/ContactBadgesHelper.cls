@@ -56,5 +56,20 @@ public without sharing class ContactBadgesHelper {
         String iconName = !String.isBlank(definition.Icon_Name__c) ? definition.Icon_Name__c : 'utility:alert';
         return iconName;
     }
+
+    public static List<Contact_Badge_Definition__mdt> sortContactBadgeDefinitions(
+        List<Contact_Badge_Definition__mdt> lstDefinitions
+    ) {
+        List<Contact_Badge_Definition__mdt> lstSortedDefinitions = new List<Contact_Badge_Definition__mdt>();
+        ContactBadgeDefinitionWrapper[] lstCBDWrapper = new List<ContactBadgeDefinitionWrapper>();
+        for (Contact_Badge_Definition__mdt definition : lstDefinitions) {
+            lstCBDWrapper.add( new ContactBadgeDefinitionWrapper(definition) );
+        }
+        lstCBDWrapper.sort();
+        for (ContactBadgeDefinitionWrapper cbdWrapper : lstCBDWrapper) {
+            lstSortedDefinitions.add( cbdWrapper.cbd );
+        }
+        return lstSortedDefinitions;
+    }
     
 }

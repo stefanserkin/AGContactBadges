@@ -5,7 +5,7 @@ export default class ContactRecordPageBadges extends LightningElement {
     @api recordId;
     error;
 
-    badgeData;
+    badgeData = [];
     wiredBadgeDataResult;
 
     @wire(getBadgeData, { recordId : '$recordId' })
@@ -19,6 +19,10 @@ export default class ContactRecordPageBadges extends LightningElement {
             this.badgeData = undefined;
             this.error = result.error;
         }
+    }
+
+    get displayBadges() {
+        return this.badgeData.length > 0 ? true : false;
     }
 
 }
