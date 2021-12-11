@@ -11,7 +11,10 @@ public without sharing class ContactBadgesHelper {
         query += 'FROM ' + definition.Object_Type__c + ' ';
         query += 'WHERE ' + definition.Relationship_to_Contact_Field__c + ' = :recordId ';
         if (!String.isBlank(definition.Filter_Criteria__c)) {
-            query += 'AND (' + definition.Filter_Criteria__c + ')';
+            query += 'AND (' + definition.Filter_Criteria__c + ') ';
+        }
+        if (!String.isBlank(definition.Order_By__c)) {
+            query += 'ORDER BY ' + definition.Order_By__c;
         }
         return query;
     }

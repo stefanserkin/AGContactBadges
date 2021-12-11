@@ -8,18 +8,18 @@ export default class ContactBadgePopover extends LightningElement {
     @track left = 50;
 
     @api
-    get mybadge() {
+    get selectedbadge() {
         return this.badge;
     }
-    set mybadge(value) {
+    set selectedbadge(value) {
         this.badge = value;
     }
 
     @api
-    get myobj() {
+    get object() {
         return this.obj;
     }
-    set myobj(value) {
+    set object(value) {
         this.obj = value;
     }
 

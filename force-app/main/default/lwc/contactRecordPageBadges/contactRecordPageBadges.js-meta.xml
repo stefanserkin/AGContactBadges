@@ -11,6 +11,13 @@
             <objects>
                 <object>Contact</object>
             </objects>
+            <property
+                label="Alerts Modal Header" 
+                name="modalHeader" 
+                type="String" 
+                default="Contact Alerts" 
+                required="true"
+            />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

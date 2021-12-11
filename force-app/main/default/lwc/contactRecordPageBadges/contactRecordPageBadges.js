@@ -4,7 +4,12 @@ import getBadgeData from '@salesforce/apex/ContactBadgesController.getBadgeData'
 
 export default class ContactRecordPageBadges extends NavigationMixin(LightningElement) {
     @api recordId;
-    error;
+    @track error;
+
+    @track showModal = false;
+    @track alertMessages = [];
+    @track modalContent;
+    @api modalHeader;
 
     @track badgeData = [];
     @track wiredBadgeDataResult;
@@ -19,7 +24,21 @@ export default class ContactRecordPageBadges extends NavigationMixin(LightningEl
     wiredBadgeData(result) {
         this.wiredBadgeDataResult = result;
         if (result.data) {
-            this.badgeData = result.data;
+            const badgeResults = result.data;
+            this.badgeData = badgeResults;
+            for (let i = 0; i < badgeResults.length; i++) {
+                if (badgeResults[i].hasAlert) {
+                    if (this.alertMessages.includes(badgeResults[i].alertMessage) === false) {
+                        this.alertMessages.push(badgeResults[i].alertMessage);
+                        console.log(':::: added to alerts: ' + badgeResults[i].alertMessage);
+                    }
+                }
+            }
+            if (this.alertMessages.length > 0) {
+                this.modalContent = this.alertMessages.join("\n");
+                console.log(':::: modal content: ' + this.modalContent);
+                this.showModal = true;
+            }
             this.error = undefined;
         } else if (result.error) {
             this.badgeData = undefined;
@@ -57,6 +76,10 @@ export default class ContactRecordPageBadges extends NavigationMixin(LightningEl
                 actionName: 'view'
             }
         });
+    }
+
+    handleModalClose() {
+        this.showModal = false;
     }
 
 }

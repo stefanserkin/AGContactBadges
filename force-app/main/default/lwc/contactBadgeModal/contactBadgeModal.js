@@ -1,6 +1,7 @@
 import { LightningElement, api } from 'lwc';
 
-export default class CustomModalBox extends LightningElement {
+export default class ContactBadgeModal extends LightningElement {
+    @api modalHeader;
     @api modalContent;
     showCancel = false;
     showOkay = true;
@@ -16,5 +17,4 @@ export default class CustomModalBox extends LightningElement {
     handleOkayEvent() {
         this.dispatchEvent(new CustomEvent('okay'));
     }
-
 }
