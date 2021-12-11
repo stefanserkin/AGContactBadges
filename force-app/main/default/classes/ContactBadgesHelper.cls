@@ -27,19 +27,6 @@ public without sharing class ContactBadgesHelper {
         return badgeLabel;
     }
 
-    public static List<String> constructFieldSet(Contact_Badge_Definition__mdt definition) {
-        List<String> fieldSet = new List<String>();
-        if (!String.isBlank(definition.Additional_Detail_Fields__c)) {
-            fieldSet = definition.Additional_Detail_Fields__c.replaceAll('\\s+','').split(',');
-        }
-        return fieldSet;
-    }
-
-    public static String getBadgeColor(Contact_Badge_Definition__mdt definition) {
-        String hexColor = definition.Background_Color__c != null ? '#' + definition.Background_Color__c : '#D3D3D3';
-        return hexColor;
-    }
-
     public static String getBadgeColorStyle(Contact_Badge_Definition__mdt definition) {
         String hexColor = definition.Background_Color__c != null ? '#' + definition.Background_Color__c : '#D3D3D3';
         String badgeColorStyle = '--sds-c-badge-color-background:' + hexColor + ';';
