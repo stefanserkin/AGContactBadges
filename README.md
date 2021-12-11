@@ -1,6 +1,6 @@
 # Asphalt Green Contact Badges
 
-A visual indication of donor levels, team registrations, active memberships, and any outstanding balance on the Contact record page.
+A visual indication of Contact highlights with quick navigation from the Contact Record Detail Page. Use it to display donor levels, team registrations, active memberships, organization affiliations, and important alerts.
 
 ## Demo
 
