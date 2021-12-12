@@ -34,6 +34,10 @@ export default class ContactBadgeModal extends NavigationMixin(LightningElement)
         this.label = value;
     }
 
+    get isContactBadge() {
+        return this.obj == 'Contact' ? true : false;
+    }
+
     handleCloseEvent() {
         this.dispatchEvent(new CustomEvent('close'));
     }
