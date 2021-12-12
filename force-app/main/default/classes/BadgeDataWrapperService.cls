@@ -63,7 +63,7 @@ public with sharing class BadgeDataWrapperService {
                 badge.colorStyle = ContactBadgesHelper.getBadgeColorStyle(definition);
                 badge.labelStyle = ContactBadgesHelper.getBadgeLabelStyle(definition);
                 badge.iconName   = ContactBadgesHelper.getBadgeIconName(definition);
-                badge.fieldSet   = definition.Additional_Detail_Fields__c;
+                badge.fieldSet   = String.isBlank(definition.Additional_Detail_Fields__c) ? 'Name' : definition.Additional_Detail_Fields__c;
                 if (definition.Alert__c) {
                     badge.hasAlert = true;
                     badge.alertMessage = definition.Alert_Message__c;

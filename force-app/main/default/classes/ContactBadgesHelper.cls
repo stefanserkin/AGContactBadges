@@ -46,7 +46,12 @@ public without sharing class ContactBadgesHelper {
     public static String getQueryFromDefinition(Contact_Badge_Definition__mdt definition) {
         // SELECT
         String query = 'SELECT Id ';
-        String[] lstDetailFields = definition.Additional_Detail_Fields__c.replaceAll('\\s+', '').split(',');
+        String[] lstDetailFields = new List<String>();
+        if (!String.isBlank(definition.Additional_Detail_Fields__c)) {
+            lstDetailFields.addAll(definition.Additional_Detail_Fields__c.replaceAll('\\s+', '').split(','));
+        } else {
+            lstDetailFields.add('Name');
+        }
         if (!String.isBlank(definition.Label_Field_Reference__c)) {
             lstDetailFields.add(definition.Label_Field_Reference__c);
         }

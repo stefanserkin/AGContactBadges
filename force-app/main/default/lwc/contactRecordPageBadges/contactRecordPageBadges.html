@@ -1,5 +1,5 @@
 <template>
-
+    <!-- ALERT MESSAGES -->
     <template if:true={showModal}>
         <c-contact-badge-alert-component
             modal-header={modalHeader}
@@ -9,6 +9,7 @@
             onclose={handleModalClose}
         ></c-contact-badge-alert-component>
     </template>
+    <!-- BADGE DETAILS MODAL -->
     <template if:true={showBadgeDetails}>
         <c-contact-badge-modal 
             selectedbadge={badge} 
@@ -20,7 +21,7 @@
             onclose={handleModalClose} 
         ></c-contact-badge-modal>
     </template>
-
+    <!-- ROW OF BADGES DISPLAY -->
     <lightning-card if:true={displayBadges}>
         <template for:each={badgeData} for:item="badge" for:index="index">
             <div key={badge.id} 
@@ -43,13 +44,5 @@
             </div>
         </template>
     </lightning-card>
-<!--
-    <c-contact-badge-popover 
-        topmargin={top} 
-        leftmargin={left} 
-        selectedbadge={badge} 
-        object={objType} 
-        fieldset={fieldSetArray}
-    ></c-contact-badge-popover>
--->
+
 </template>
