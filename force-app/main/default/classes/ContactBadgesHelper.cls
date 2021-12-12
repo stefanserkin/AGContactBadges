@@ -1,6 +1,7 @@
 public without sharing class ContactBadgesHelper {
 
     public static String getQueryFromDefinition(Contact_Badge_Definition__mdt definition) {
+        // SELECT
         String query = 'SELECT Id ';
         if (!String.isBlank(definition.Label_Field_Reference__c)) {
             query += ', ' + definition.Label_Field_Reference__c + ' ';
@@ -8,11 +9,15 @@ public without sharing class ContactBadgesHelper {
         if (!String.isBlank(definition.Additional_Detail_Fields__c)) {
             query += ', ' + definition.Additional_Detail_Fields__c + ' ';
         }
+        // FROM
         query += 'FROM ' + definition.Object_Type__c + ' ';
-        query += 'WHERE ' + definition.Relationship_to_Contact_Field__c + ' = :recordId ';
+        // WHERE
+        query += 'WHERE ' + definition.Related_Object_ID_Path__c + ' = :';
+        query += definition.Related_Object_Type__c == 'Account' ? 'accountId ' : 'recordId ';        
         if (!String.isBlank(definition.Filter_Criteria__c)) {
             query += 'AND (' + definition.Filter_Criteria__c + ') ';
         }
+        // ORDER BY
         if (!String.isBlank(definition.Order_By__c)) {
             query += 'ORDER BY ' + definition.Order_By__c;
         }

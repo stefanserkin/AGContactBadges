@@ -1,12 +1,16 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
+import { getRecord } from 'lightning/uiRecordApi';
 import getBadgeData from '@salesforce/apex/ContactBadgesController.getBadgeData';
+import ACCOUNT_ID_FIELD from '@salesforce/schema/Contact.AccountId';
+import FIRST_NAME_FIELD from '@salesforce/schema/Contact.FirstName';
 
 export default class ContactRecordPageBadges extends NavigationMixin(LightningElement) {
     @api recordId;
     @track error;
 
     @track showModal = false;
+    @track showBadgeDetails = false;
     @track alertMessages = [];
     @track modalContent;
     @api modalHeader;
@@ -17,11 +21,29 @@ export default class ContactRecordPageBadges extends NavigationMixin(LightningEl
     @track badge;
     @track objType;
     @track fieldSetArray = [];
-    @track selectedBadgeId;
-    @track selectedObjName;
 
-    @wire(getBadgeData, { recordId : '$recordId' })
-    wiredBadgeData(result) {
+    accountId;
+    firstName;
+
+    @wire(getRecord, { 
+        recordId : '$recordId', 
+        fields : [ACCOUNT_ID_FIELD, FIRST_NAME_FIELD]
+    }) wireContact({
+        error,
+        data
+    }) {
+        if (error) {
+            this.error = error;
+        } else if (data) {
+            this.accountId = data.fields.AccountId.value;
+            this.firstName = data.fields.FirstName.value;
+        }
+    }
+
+    @wire(getBadgeData, { 
+        recordId : '$recordId',
+        accountId : '$accountId'
+    }) wiredBadgeData(result) {
         this.wiredBadgeDataResult = result;
         if (result.data) {
             const badgeResults = result.data;
@@ -50,24 +72,14 @@ export default class ContactRecordPageBadges extends NavigationMixin(LightningEl
         return this.badgeData.length > 0 ? true : false;
     }
 
-    showData(event) {
-		this.badge = event.currentTarget.dataset.badgeid;
-        this.objType = event.currentTarget.dataset.objtype;
-        this.fieldSetArray = event.currentTarget.dataset.fieldset.split(',');
-		this.left = event.clientX;
-		this.top = event.clientY;
-	}
-
-	hideData() {
-		this.badge = "";
-        this.objType = "";
-        this.fieldSetArray = [];
-	}
-
     handleBadgeClick(event) {
         const selectedBadgeData = event.currentTarget.dataset;
-        this.selectedBadgeId = selectedBadgeData.badgeid;
-        this.selectedObjName = selectedBadgeData.objtype;
+        this.badge = selectedBadgeData.badgeid;
+        this.objType = selectedBadgeData.objtype;
+        this.fieldSetArray = selectedBadgeData.fieldset.split(',');
+        this.showBadgeDetails = true;
+
+        /*
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
             attributes: {
@@ -76,10 +88,12 @@ export default class ContactRecordPageBadges extends NavigationMixin(LightningEl
                 actionName: 'view'
             }
         });
+        */
     }
 
     handleModalClose() {
         this.showModal = false;
+        this.showBadgeDetails = false;
     }
 
 }
