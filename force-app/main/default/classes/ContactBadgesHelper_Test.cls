@@ -2,7 +2,7 @@
 private class ContactBadgesHelper_Test {
 
     private static Id hhRecTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HH_Account').getRecordTypeId();
-    private static Contact_Badge_Definition__mdt birthdayBadgeDefinition = Contact_Badge_Definition__mdt.getInstance('Birthday_Badge');
+    private static Contact_Badge_Definition__mdt birthdayBadgeDefinition = Contact_Badge_Definition__mdt.getInstance('Sample_Birthday_Badge');
     
     @isTest
     static void testGetBadgeLabel() {

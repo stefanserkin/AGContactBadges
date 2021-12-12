@@ -8,6 +8,7 @@ private class BadgeDataWrapperService_Test {
 
     @isTest
     static void testBadgeWithDynamicLabel() {
+        BadgeDataWrapperService.isTestScenario = true;
 
         Account acc = new Account(Name='Wright Household', RecordTypeId=hhRecTypeId);
         insert acc;
@@ -40,6 +41,7 @@ private class BadgeDataWrapperService_Test {
 
     @isTest
     static void testDuplicateBadgeLabels() {
+        BadgeDataWrapperService.isTestScenario = true;
 
         Account acc = new Account(Name='Wright Household', RecordTypeId=hhRecTypeId);
         insert acc;

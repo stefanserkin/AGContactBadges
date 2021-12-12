@@ -1,5 +1,7 @@
 public with sharing class BadgeDataWrapperService {
 
+    @TestVisible static Boolean isTestScenario = false;
+
     public static List<BadgeDataWrapper> getBadgeDataForContact(String recordId, String accountId) {
         List<Contact_Badge_Definition__mdt> lstDefinitions = getSortedDefinitions();
         List<BadgeDataWrapper> lstBadgeData = getBadgeDataWrappers(lstDefinitions, recordId, accountId);
@@ -43,7 +45,10 @@ public with sharing class BadgeDataWrapperService {
         // Create set to store label names to avoid duplicates
         Set<String> setLabelNames = new Set<String>();
         for (Contact_Badge_Definition__mdt definition : lstDefinitions) {
-            if (!definition.Active__c) {
+            if (isTestScenario && !definition.Sample__c) {
+                continue;
+            }
+            if (!isTestScenario && !definition.Active__c) {
                 continue;
             }
             // Query for related records

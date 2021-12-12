@@ -3,6 +3,8 @@ private class ContactBadgeDefinitionWrapper_Test {
     
     @isTest
     static void testWrapperSorting() {
+
+        BadgeDataWrapperService.isTestScenario = true;
         
         List<Contact_Badge_Definition__mdt> lstDefinitions = Contact_Badge_Definition__mdt.getAll().values();
         List<Contact_Badge_Definition__mdt> lstSortedDefinitions = new List<Contact_Badge_Definition__mdt>();

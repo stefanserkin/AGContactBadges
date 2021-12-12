@@ -8,6 +8,8 @@ private class ContactBadgesController_Test {
     @isTest
     static void testBadgesFromController() {
 
+        BadgeDataWrapperService.isTestScenario = true;
+
         Account acc = new Account(Name='Wright Household', RecordTypeId=hhRecTypeId);
         insert acc;
 
