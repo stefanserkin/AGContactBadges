@@ -1,29 +1,5 @@
 public without sharing class ContactBadgesHelper {
 
-    public static String getQueryFromDefinition(Contact_Badge_Definition__mdt definition) {
-        // SELECT
-        String query = 'SELECT Id ';
-        if (!String.isBlank(definition.Label_Field_Reference__c)) {
-            query += ', ' + definition.Label_Field_Reference__c + ' ';
-        }
-        if (!String.isBlank(definition.Additional_Detail_Fields__c)) {
-            query += ', ' + definition.Additional_Detail_Fields__c + ' ';
-        }
-        // FROM
-        query += 'FROM ' + definition.Object_Type__c + ' ';
-        // WHERE
-        query += 'WHERE ' + definition.Related_Object_ID_Path__c + ' = :';
-        query += definition.Related_Object_Type__c == 'Account' ? 'accountId ' : 'recordId ';        
-        if (!String.isBlank(definition.Filter_Criteria__c)) {
-            query += 'AND (' + definition.Filter_Criteria__c + ') ';
-        }
-        // ORDER BY
-        if (!String.isBlank(definition.Order_By__c)) {
-            query += 'ORDER BY ' + definition.Order_By__c;
-        }
-        return query;
-    }
-
     public static String getBadgeLabel(Contact_Badge_Definition__mdt definition, SObject obj) {
         String badgeLabel = '';
         if (definition.Badge_Label_Type__c == 'Value') {
@@ -66,5 +42,37 @@ public without sharing class ContactBadgesHelper {
         }
         return lstSortedDefinitions;
     }
+
+    public static String getQueryFromDefinition(Contact_Badge_Definition__mdt definition) {
+        // SELECT
+        String query = 'SELECT Id ';
+        String[] lstDetailFields = definition.Additional_Detail_Fields__c.replaceAll('\\s+', '').split(',');
+        if (!String.isBlank(definition.Label_Field_Reference__c)) {
+            lstDetailFields.add(definition.Label_Field_Reference__c);
+        }
+        Set<String> dedupeSet = new Set<String>();
+        dedupeSet.addAll(lstDetailFields);
+        for (String field : dedupeSet) {
+            query += ', ' + field + ' ';
+        }
+
+        // FROM
+        query += 'FROM ' + definition.Object_Type__c + ' ';
+
+        // WHERE
+        query += 'WHERE ' + definition.Related_Object_ID_Path__c + ' = :';
+        query += definition.Related_Object_Type__c == 'Account' ? 'accountId ' : 'recordId ';        
+        if (!String.isBlank(definition.Filter_Criteria__c)) {
+            query += 'AND (' + definition.Filter_Criteria__c + ') ';
+        }
+
+        // ORDER BY
+        if (!String.isBlank(definition.Order_By__c)) {
+            query += 'ORDER BY ' + definition.Order_By__c;
+        }
+
+        return query;
+    }
+
     
 }
