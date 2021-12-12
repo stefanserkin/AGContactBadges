@@ -10,7 +10,7 @@
                     <span class="slds-assistive-text">Close</span>
                 </button>
                 <label></label>
-                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{modalHeader}</h2>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{label}</h2>
             </header>
             <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-1">
                 <template if:true={badge}>
@@ -21,16 +21,23 @@
                             </div>
                         </template>
                     </lightning-record-view-form>
-                    <lightning-button label="Go To Record" title="Go To Record" onclick={handleGoToRecord} class="slds-var-m-top_small"></lightning-button>
                 </template>
             </div>
             <footer class="slds-modal__footer">
-                <template if:true={showCancel}>
-                    <button class="slds-button slds-button_neutral" onclick={handleCancelEvent} title="Cancel">Cancel</button>
-                </template>
-                <template if:true={showOkay}>
-                    <button class="slds-button slds-button_brand" onclick={handleOkayEvent} title="OK">OK</button>
-                </template>
+                <lightning-button 
+                    variant="neutral" 
+                    label="Cancel" 
+                    title="Cancel" 
+                    onclick={handleCancelEvent} 
+                    class="slds-m-left_x-small"
+                ></lightning-button>
+                <lightning-button 
+                    variant="brand"
+                    label="Go To Record" 
+                    title="Go To Record" 
+                    onclick={handleGoToRecord} 
+                    class="slds-m-left_x-small"
+                ></lightning-button>
             </footer>
         </div>
     </section>

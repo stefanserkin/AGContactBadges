@@ -55,6 +55,14 @@
         <value xsi:nil="true"/>
     </values>
     <values>
+        <field>Related_Object_ID_Path__c</field>
+        <value xsi:type="xsd:string">ContactId</value>
+    </values>
+    <values>
+        <field>Related_Object_Type__c</field>
+        <value xsi:type="xsd:string">Contact</value>
+    </values>
+    <values>
         <field>Relationship_to_Contact_Field__c</field>
         <value xsi:type="xsd:string">ContactId</value>
     </values>

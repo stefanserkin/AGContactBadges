@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Alert__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Background_Color__c</field>
@@ -53,6 +53,14 @@
     <values>
         <field>Order_By__c</field>
         <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Related_Object_ID_Path__c</field>
+        <value xsi:type="xsd:string">Id</value>
+    </values>
+    <values>
+        <field>Related_Object_Type__c</field>
+        <value xsi:type="xsd:string">Account</value>
     </values>
     <values>
         <field>Relationship_to_Contact_Field__c</field>

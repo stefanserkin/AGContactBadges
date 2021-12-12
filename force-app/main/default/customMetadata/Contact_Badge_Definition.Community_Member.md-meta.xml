@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Active__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Additional_Detail_Fields__c</field>
@@ -52,6 +52,14 @@
     </values>
     <values>
         <field>Order_By__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Related_Object_ID_Path__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Related_Object_Type__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>

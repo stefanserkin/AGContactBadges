@@ -14,6 +14,7 @@
             selectedbadge={badge} 
             object={objType} 
             fieldset={fieldSetArray} 
+            objlabel={label} 
             oncancel={handleModalClose} 
             onokay={handleModalClose} 
             onclose={handleModalClose} 
@@ -26,7 +27,8 @@
                 style="display:inline-block;" 
                 data-badgeid={badge.id} 
                 data-objtype={badge.objType} 
-                data-fieldset={badge.fieldSet}  
+                data-fieldset={badge.fieldSet} 
+                data-label={badge.label} 
                 onclick={handleBadgeClick} 
                 class="contact-badge">
                 <div style={badge.colorStyle}>

@@ -5,6 +5,7 @@ export default class ContactBadgeModal extends NavigationMixin(LightningElement)
     modalHeader = 'Badge Details';
     @track badge;
     @track obj;
+    @track label;
     @api fieldset = [];
     showCancel = false;
     showOkay = true;
@@ -23,6 +24,14 @@ export default class ContactBadgeModal extends NavigationMixin(LightningElement)
     }
     set object(value) {
         this.obj = value;
+    }
+
+    @api
+    get objlabel() {
+        return this.label;
+    }
+    set objlabel(value) {
+        this.label = value;
     }
 
     handleCloseEvent() {
@@ -46,12 +55,6 @@ export default class ContactBadgeModal extends NavigationMixin(LightningElement)
                 actionName: 'view'
             }
         });
-    }
-
-    logDebuggery() {
-        console.log(this.selectedBadgeId);
-        console.log(this.selectedObjName);
-        console.log(this.fieldSetArray);
     }
 
 }

@@ -21,6 +21,7 @@ export default class ContactRecordPageBadges extends NavigationMixin(LightningEl
     @track badge;
     @track objType;
     @track fieldSetArray = [];
+    @track label;
 
     accountId;
     firstName;
@@ -52,13 +53,11 @@ export default class ContactRecordPageBadges extends NavigationMixin(LightningEl
                 if (badgeResults[i].hasAlert) {
                     if (this.alertMessages.includes(badgeResults[i].alertMessage) === false) {
                         this.alertMessages.push(badgeResults[i].alertMessage);
-                        console.log(':::: added to alerts: ' + badgeResults[i].alertMessage);
                     }
                 }
             }
             if (this.alertMessages.length > 0) {
                 this.modalContent = this.alertMessages.join("\n");
-                console.log(':::: modal content: ' + this.modalContent);
                 this.showModal = true;
             }
             this.error = undefined;
@@ -77,18 +76,8 @@ export default class ContactRecordPageBadges extends NavigationMixin(LightningEl
         this.badge = selectedBadgeData.badgeid;
         this.objType = selectedBadgeData.objtype;
         this.fieldSetArray = selectedBadgeData.fieldset.split(',');
+        this.label = selectedBadgeData.label;
         this.showBadgeDetails = true;
-
-        /*
-        this[NavigationMixin.Navigate]({
-            type: 'standard__recordPage',
-            attributes: {
-                recordId: this.selectedBadgeId,
-                objectApiName: this.selectedObjName,
-                actionName: 'view'
-            }
-        });
-        */
     }
 
     handleModalClose() {
