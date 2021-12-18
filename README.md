@@ -4,6 +4,8 @@ A display component of Contact highlights with quick navigation to related recor
 
 ## Demo
 
+- [Contact Badges Demo](https://www.loom.com/share/6b06a45214374b449859bc438631958b)
+
 ## Docs
 
 - [Contact Badges Build Deck](https://asphaltgreenues.sharepoint.com/:w:/s/IT/ESfL_L2IguVFrwBtUrWc9UYBBufk1c3zjcI2I3Q4KZIBfg?e=tgM3pM)
