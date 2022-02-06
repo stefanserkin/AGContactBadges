@@ -22,7 +22,7 @@
         ></c-contact-badge-modal>
     </template>
     <!-- ROW OF BADGES DISPLAY -->
-    <lightning-card if:true={displayBadges} title="Highlights">
+    <lightning-card if:true={displayBadges}>
         <template for:each={badgeData} for:item="badge" for:index="index">
             <div key={badge.id} 
                 style="display:inline-block;" 
@@ -37,7 +37,7 @@
                         <lightning-badge 
                             icon-name={badge.iconName}
                             label={badge.label} 
-                            class="slds-var-m-horizontal_small" 
+                            class="slds-var-m-horizontal_small slds-var-m-bottom_small" 
                         ></lightning-badge>
                     </div>
                 </div>
