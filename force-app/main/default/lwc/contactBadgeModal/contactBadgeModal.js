@@ -3,6 +3,7 @@ import { NavigationMixin } from 'lightning/navigation';
 
 export default class ContactBadgeModal extends NavigationMixin(LightningElement) {
     modalHeader = 'Badge Details';
+    @track recordid;
     @track badge;
     @track obj;
     @track label;
@@ -16,6 +17,14 @@ export default class ContactBadgeModal extends NavigationMixin(LightningElement)
     }
     set selectedbadge(value) {
         this.badge = value;
+    }
+
+    @api
+    get contactid() {
+        return this.recordid;
+    }
+    set contactid(value) {
+        this.recordid = value;
     }
 
     @api
@@ -35,7 +44,7 @@ export default class ContactBadgeModal extends NavigationMixin(LightningElement)
     }
 
     get isContactBadge() {
-        return this.obj == 'Contact' ? true : false;
+        return this.badge == this.recordid ? true : false;
     }
 
     handleCloseEvent() {
