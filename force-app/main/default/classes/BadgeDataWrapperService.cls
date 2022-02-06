@@ -1,12 +1,26 @@
 public with sharing class BadgeDataWrapperService {
 
+    private static final String CACHE_KEY_PREFIX = 'cb';
+    private static final String CACHE_PARTITION_NAME = 'local.ContactBadges';
+    private static final String DEFAULT_BADGE_FIELDSET = 'Name';
+
     @TestVisible static Boolean isTestScenario = false;
+
+    /****************************************************
+     * Main entry
+     * @param String Contact Id (recordId)
+     * @param String Contact's Account Id (accountId)
+     ****************************************************/
 
     public static List<BadgeDataWrapper> getBadgeDataForContact(String recordId, String accountId) {
         List<Contact_Badge_Definition__mdt> lstDefinitions = getSortedDefinitions();
         List<BadgeDataWrapper> lstBadgeData = getBadgeDataWrappers(lstDefinitions, recordId, accountId);
         return lstBadgeData;
     }
+
+    /****************************************************
+     * Wrapper with all the attributes needed in component
+     ****************************************************/
 
     public class BadgeDataWrapper {
         @AuraEnabled
@@ -29,11 +43,27 @@ public with sharing class BadgeDataWrapperService {
         public String alertMessage {get;set;}
     }
 
+    /****************************************************
+     * Returns a list of all badge definitions, sorted by 
+     *     the sort order defined in the custom metadata record
+     ****************************************************/
+
     private static List<Contact_Badge_Definition__mdt> getSortedDefinitions() {
         List<Contact_Badge_Definition__mdt> lstUnsortedDefinitions = Contact_Badge_Definition__mdt.getAll().values();
-        List<Contact_Badge_Definition__mdt> lstDefinitions = ContactBadgesHelper.sortContactBadgeDefinitions(lstUnsortedDefinitions);
+        List<Contact_Badge_Definition__mdt> lstDefinitions = ContactBadgesHelper.sortContactBadgeDefinitions(
+            lstUnsortedDefinitions
+        );
         return lstDefinitions;
     }
+
+    /****************************************************
+     * Returns a list of badge data wrappers, with properties
+     *     set by helper methods in ContactBadgesHelper.cls
+     * @param List<Contact_Badge_Definition__mdt> A list of custom
+     *     metadata records to create badges from
+     * @param String Contact Id (recordId)
+     * @param String Contact's Account Id (accountId)
+     ****************************************************/
 
     private static List<BadgeDataWrapper> getBadgeDataWrappers(
         List<Contact_Badge_Definition__mdt> lstDefinitions,
@@ -45,10 +75,7 @@ public with sharing class BadgeDataWrapperService {
         // Create set to store label names to avoid duplicates
         Set<String> setLabelNames = new Set<String>();
         for (Contact_Badge_Definition__mdt definition : lstDefinitions) {
-            if (isTestScenario && !definition.Sample__c) {
-                continue;
-            }
-            if (!isTestScenario && !definition.Active__c) {
+            if ((isTestScenario && !definition.Sample__c) || (!isTestScenario && !definition.Active__c)) {
                 continue;
             }
             // Query for related records
@@ -60,24 +87,51 @@ public with sharing class BadgeDataWrapperService {
                 badge.id         = obj.Id;
                 badge.objType    = definition.Object_Type__c;
                 badge.label      = ContactBadgesHelper.getBadgeLabel(definition, obj);
+                // Prevent duplicates
+                if (setLabelNames.contains(badge.label)) {
+                    continue;
+                } else {
+                    setLabelNames.add(badge.label);
+                }
                 badge.colorStyle = ContactBadgesHelper.getBadgeColorStyle(definition);
                 badge.labelStyle = ContactBadgesHelper.getBadgeLabelStyle(definition);
                 badge.iconName   = ContactBadgesHelper.getBadgeIconName(definition);
-                badge.fieldSet   = String.isBlank(definition.Additional_Detail_Fields__c) ? 'Name' : definition.Additional_Detail_Fields__c;
-                if (definition.Alert__c) {
+                badge.fieldSet   = String.isBlank(definition.Additional_Detail_Fields__c) ? 
+                    DEFAULT_BADGE_FIELDSET : 
+                    definition.Additional_Detail_Fields__c;
+                if (definition.Alert__c && verifyFirstSessionVisit(recordId)) {
                     badge.hasAlert = true;
-                    badge.alertMessage = definition.Alert_Message__c;
+                    badge.alertMessage = ContactBadgesHelper.getBadgeAlertMessage(definition, obj);
                 } else {
                     badge.hasAlert = false;
                 }
-                if (setLabelNames.contains(badge.label)) {
-                    continue;
-                }
-                setLabelNames.add(badge.label);
                 lstBadgeData.add(badge);
             }
         }
         return lstBadgeData;
+    }
+
+    /****************************************************
+     * Returns true if this is the running user's first visit to this
+     *     Contact page in the current session and caches the current
+     *     visit. Returns false if a visit is found in the session cache
+     * @param String Contact Id (recordId)
+     ****************************************************/
+
+    private static Boolean verifyFirstSessionVisit(String recordId) {
+        Boolean isFirstVisit;
+        // Create cache key out of user and contact ids
+        String userId = UserInfo.getUserId();
+        String cacheContactKey = CACHE_KEY_PREFIX + userId + recordId;
+        // Create instance of session partition
+        Cache.SessionPartition part = Cache.Session.getPartition(CACHE_PARTITION_NAME);
+        if (part.contains(cacheContactKey)) {
+            isFirstVisit = false;
+        } else {
+            part.put(cacheContactKey, Datetime.now());
+            isFirstVisit = true;
+        }
+        return isFirstVisit;
     }
 
 }
