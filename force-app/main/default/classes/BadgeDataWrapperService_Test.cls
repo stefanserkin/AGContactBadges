@@ -71,6 +71,33 @@ private class BadgeDataWrapperService_Test {
         }
                 
     }
+    
+    @isTest
+    static void testBadgeWithNoDefinedFieldSet() {
+        BadgeDataWrapperService.isTestScenario = true;
+
+        Account acc = new Account(Name='Wright Household', RecordTypeId=hhRecTypeId);
+        insert acc;
+
+        Contact ct = new Contact(AccountId=acc.Id, FirstName='David', LastName='Wright', Email='capn@mets.com', Birthdate=Date.today(), Title='Third Basemen');
+        insert ct;
+
+        List<BadgeDataWrapperService.BadgeDataWrapper> wrapperResult = new List<BadgeDataWrapperService.BadgeDataWrapper>();
+        
+        Test.startTest();
+        wrapperResult = BadgeDataWrapperService.getBadgeDataForContact(ct.Id, acc.Id);
+        Test.stopTest();
+
+        Boolean foundMetsBadge = false;
+        Boolean foundBirthdayBadge = false;
+        for (BadgeDataWrapperService.BadgeDataWrapper badge : wrapperResult) {
+            if (badge.label == 'Third Basemen') {
+                foundMetsBadge = true;
+            }
+        }
+        System.assert(foundMetsBadge, 'Did not find Mets badge');
+        
+    }
 
     
 }

@@ -10,7 +10,7 @@ private class ContactBadgesHelper_Test {
         Account acc = new Account(Name='Wright Household', RecordTypeId=hhRecTypeId);
         insert acc;
 
-        Contact ct = new Contact(AccountId=acc.Id, FirstName='David', LastName='Wright', Email='capn@mets.com', Birthdate=Date.today(), Title='Third Basemen');
+        Contact ct = new Contact(AccountId=acc.Id, FirstName='David', LastName='Wright', Email='capn@mets.com', Birthdate=Date.today().addYears(-30), Title='Third Basemen');
         insert ct;
         
         Test.startTest();
@@ -19,7 +19,26 @@ private class ContactBadgesHelper_Test {
 
         String expectedLabel = 'It\'s my birthday!';
 
-        System.assertEquals(expectedLabel, badgeLabel, 'Unexpected label for birthday badge');
+        System.assert(badgeLabel.contains(expectedLabel), 'Unexpected label for birthday badge');
+        
+    }
+    
+    @isTest
+    static void testGetBadgeAlertMessage() {
+
+        Account acc = new Account(Name='Wright Household', RecordTypeId=hhRecTypeId);
+        insert acc;
+
+        Contact ct = new Contact(AccountId=acc.Id, FirstName='David', LastName='Wright', Email='capn@mets.com', Birthdate=Date.today().addYears(-30), Title='Third Basemen');
+        insert ct;
+        
+        Test.startTest();
+        String badgeAlertMessage = ContactBadgesHelper.getBadgeAlertMessage(birthdayBadgeDefinition, ct);
+        Test.stopTest();
+
+        String expectedMessage = 'It\'s my birthday!';
+
+        System.assert(badgeAlertMessage.contains(expectedMessage), 'Unexpected alert message for birthday badge');
         
     }
 
