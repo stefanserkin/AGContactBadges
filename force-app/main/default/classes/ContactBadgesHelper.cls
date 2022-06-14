@@ -54,9 +54,9 @@ public without sharing class ContactBadgesHelper {
 
         // WHERE
         query += 'WHERE ' + definition.Related_Object_ID_Path__c + ' = :';
-        query += definition.Related_Object_Type__c == 'Account' ? 'accountId ' : 'recordId ';        
+        query += definition.Related_Object_Type__c == 'Account' ? 'accountId ' : 'recordId ';
         if (!String.isBlank(definition.Filter_Criteria__c)) {
-            query += 'AND (' + definition.Filter_Criteria__c + ') ';
+            query += 'AND ' + definition.Filter_Criteria__c + ' ';
         }
 
         // ORDER BY

@@ -68,7 +68,7 @@ export default class ContactRecordPageBadges extends NavigationMixin(LightningEl
     }
 
     get displayBadges() {
-        return this.badgeData.length > 0 ? true : false;
+        return this.badgeData != null && this.badgeData.length > 0 ? true : false;
     }
 
     handleBadgeClick(event) {
