@@ -143,7 +143,7 @@ public without sharing class ContactBadgesHelper {
         Contact_Badge_Definition__mdt definition
     ) {
         String labelHexColor = definition.Label_Color__c != null ? '#' + definition.Label_Color__c : DEFAULT_LABEL_COLOR;
-        String badgeLabelStyle = '--sds-c-badge-text-color:' + labelHexColor + ';';
+        String badgeLabelStyle = '--sds-c-badge-text-color:' + labelHexColor + ';--slds-c-badge-icon-color-foreground:' + labelHexColor;
         return badgeLabelStyle;
     }
 
