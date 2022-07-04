@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Label_Value__c</fullName>
+    <description>If Badge Label Type is set to &apos;Label Value&apos;, use this field to define the label for all records returned by this Contact Badge Definition. Use {!My_Custom_Field__c} syntax to display merged values</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>If Badge Label Type is set to &apos;Label Value&apos;, use this field to define the label for all records returned by this Contact Badge Definition. Use {!My_Custom_Field__c} syntax to display merged values</inlineHelpText>
+    <label>Label Value</label>
+    <length>50</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

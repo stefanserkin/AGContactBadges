@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Alert__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If true, a pop-up alert will display to the user on page load</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>If true, a pop-up alert will display to the user on page load</inlineHelpText>
+    <label>Alert</label>
+    <type>Checkbox</type>
+</CustomField>

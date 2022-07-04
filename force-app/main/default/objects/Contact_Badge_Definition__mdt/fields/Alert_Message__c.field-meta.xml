@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Alert_Message__c</fullName>
+    <description>When Alert equals true, this message displays in the pop-up window on page load. Use {!My_Custom_Field__c} syntax to display merged values</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>When Alert equals true, this message displays in the pop-up window on page load. Use {!My_Custom_Field__c} syntax to display merged values</inlineHelpText>
+    <label>Alert Message</label>
+    <length>255</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

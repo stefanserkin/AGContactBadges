@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sort_Order_Out_of_Range</fullName>
+    <active>true</active>
+    <description>Enforces using positive integers between 1 and 100 for a Contact Badge Definition’s sort order.</description>
+    <errorConditionFormula>Sort_Order__c &lt; 1 || Sort_Order__c &gt; 100</errorConditionFormula>
+    <errorDisplayField>Sort_Order__c</errorDisplayField>
+    <errorMessage>Sort Order value must be between 1 and 100</errorMessage>
+</ValidationRule>

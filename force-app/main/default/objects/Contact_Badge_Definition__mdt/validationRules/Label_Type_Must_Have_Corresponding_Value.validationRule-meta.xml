@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Label_Type_Must_Have_Corresponding_Value</fullName>
+    <active>true</active>
+    <description>Enforces a provided value for the selected Badge Label Type</description>
+    <errorConditionFormula>OR(
+ AND(
+  ISPICKVAL( Badge_Label_Type__c, &quot;Field Reference&quot; ),
+  ISBLANK( Label_Field_Reference__c )
+ ),
+ AND(
+  ISPICKVAL( Badge_Label_Type__c, &quot;Value&quot; ),
+  ISBLANK( Label_Value__c )
+ )
+)</errorConditionFormula>
+    <errorMessage>A Badge Label Type of Field Reference must have a Label Field Reference defined. A Badge Label Type of Value must have a Label Value defined.</errorMessage>
+</ValidationRule>

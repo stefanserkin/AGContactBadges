@@ -56,7 +56,7 @@ private class ContactBadgesHelper_Test {
         Test.startTest();
         String badgeLabelStyle = ContactBadgesHelper.getBadgeLabelStyle(birthdayBadgeDefinition);
         Test.stopTest();
-        String expectedString = '--sds-c-badge-text-color:#000000;';
+        String expectedString = '--sds-c-badge-text-color:#000000;--slds-c-badge-icon-color-foreground:#000000';
         System.assertEquals(expectedString, badgeLabelStyle, 'Unexpected string for badge label style');
     }
 
